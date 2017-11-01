@@ -7,6 +7,8 @@ import { Component, OnInit } from '@angular/core';
 })
 export class HeyoContestSetupComponent implements OnInit {
 
+  contestEndDate: string;
+  
   constructor() { }
 
   ngOnInit() {
