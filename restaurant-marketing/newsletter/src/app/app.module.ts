@@ -1,13 +1,12 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import {DatePickerModule} from 'ng2-datepicker-bootstrap';
-import { FormsModule } from '@angular/forms';
+import {NgxElectronModule} from 'ngx-electron';
+
 
 import { AppComponent } from './app.component';
 import { HomeComponent,
           HeyoContestSetupComponent } from './components';
-
 
 const appRoutes: Routes = [
   { path: 'home',      component: HomeComponent },
@@ -24,11 +23,13 @@ const appRoutes: Routes = [
   ],
   imports: [
     BrowserModule,
+    NgxElectronModule,
     RouterModule.forRoot(
       appRoutes//, { enableTracing: true } // <-- debugging purposes only
     )
   ],
-  providers: [],
+  providers: [
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
