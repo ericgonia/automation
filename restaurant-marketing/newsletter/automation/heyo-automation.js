@@ -1,4 +1,5 @@
 const { Builder, By, Key, until } = require('selenium-webdriver');
+const { config } = require('../config');
 
 function setupContest(type) {
     let driver = new Builder()
@@ -6,7 +7,13 @@ function setupContest(type) {
         .build();
 
     driver.get('https://www.heyo.com/app/login');
-    driver.findElement(By.className("btn-primary")).click();
+
+    const userId = config.heyo.userId;
+    const password = config.heyo.password;
+
+    driver.findElement(By.name("username")).sendKeys(userId);
+    driver.findElement(By.name("password")).sendKeys(password);
+    driver.findElement(By.xpath("//button[@type='submit']")).click();
     //driver.wait(until.titleIs('webdriver - Google Search'), 1000);
     //driver.quit();
 }
