@@ -12,6 +12,20 @@ function AutoHelpers(driver) {
             }).catch((error) => reject(error));
         });
     }
+
+
+    this.sendKeys = function (xpath, keys) {
+        var me = this;
+        return new Promise((resolve, reject) => {
+            me.driver.wait(until.elementLocated(By.xpath(xpath)), 5000).then(el => {
+                me.driver.wait(until.elementIsVisible(el), 5000).then(vel => {
+                    vel.sendKeys(Key.chord(Key.CONTROL, "a"));
+                    return vel.sendKeys(keys).then(() => resolve(), (err) => reject(err));
+                })
+            }).catch((error) => reject(error));
+        });
+    }
+    
 }
 
 

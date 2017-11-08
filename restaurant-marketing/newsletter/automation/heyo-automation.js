@@ -8,6 +8,7 @@ let autoHelpers = null;
 function setupContest(type) {
     const userId = config.heyo.userId;
     const password = config.heyo.password;
+    const contestName = config.heyo.contests.dinnerForTwo.name;
 
     driver = new Builder()
         .forBrowser('chrome')
@@ -17,7 +18,7 @@ function setupContest(type) {
     driver.get('https://www.heyo.com/app/login');
 
     loginToHeyo(userId, password).then(() => {
-        duplicateCampaign().then(() => {
+        duplicateCampaign(contestName).then(() => {
             console.log('campaign duplicated');
         }, (error) => console.log(error));
     }, (error) => console.log(error));
@@ -37,11 +38,14 @@ function loginToHeyo(userId, password) {
 }
 
 
-function duplicateCampaign() {
+function duplicateCampaign(contestName) {
     return new Promise((resolve, reject) => {
         autoHelpers.clickElement("//*[@id=\"drop_heyo225_views_form_Dropdown_1\"]").then(() => {
             autoHelpers.clickElement("//*[@id=\"heyo225_views_form_Dropdown_1\"]/ul/li[1]/a").then(() => {
-                resolve();
+                autoHelpers.sendKeys("//*[@name=\"campaign_name\"]", contestName).then(() => {
+                    autoHelpers.clickElement("//*[@id=\"heyo225_dashboard_views_DuplicateCampaignDialog_DuplicateCampaignView_0\"]/div[2]/p/button[2]")
+                    .then(() => resolve(), (error) => reject(error));
+                }), (error) => reject(error)
             }, (error) => reject(error));
         }, (error) => reject(error));
     });
